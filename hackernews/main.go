@@ -15,10 +15,7 @@ func main() {
 		url := e.ChildAttr("a:nth-of-type(1)", "href")
 		author := e.ChildText("span")
 
-		fmt.Println("Title: ", title)
-		fmt.Println("Url: ", url)
-		fmt.Println("Author: ", author)
-		fmt.Println("-----------------")
+		getInfoOfAnArticle(article{title, url, author})
 	})
 
 	c.OnRequest(func(r *colly.Request) {
@@ -26,4 +23,17 @@ func main() {
 	})
 
 	c.Visit("https://news.ycombinator.com/")
+}
+
+type article struct {
+	title  string
+	url    string
+	author string
+}
+
+func getInfoOfAnArticle(article article) {
+	fmt.Println("Title: ", article.title)
+	fmt.Println("Url: ", article.url)
+	fmt.Println("Author: ", article.author)
+	fmt.Println("-----------------")
 }
