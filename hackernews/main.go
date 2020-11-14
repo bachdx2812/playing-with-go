@@ -10,9 +10,15 @@ func main() {
 	c := colly.NewCollector()
 
 	// Find and visit all links
-	c.OnHTML("#hnmain table.itemlist tbody tr.athing td.title a.storylink", func(e *colly.HTMLElement) {
-		fmt.Println("Title: ", e.Text)
-		fmt.Println("URL: ", e.Attr("href"))
+	c.OnHTML("table.itemlist > tbody > tr.athing td:nth-of-type(3)", func(e *colly.HTMLElement) {
+		title := e.ChildText("a:nth-of-type(1)")
+		url := e.ChildAttr("a:nth-of-type(1)", "href")
+		author := e.ChildText("span")
+
+		fmt.Println("Title: ", title)
+		fmt.Println("Url: ", url)
+		fmt.Println("Author: ", author)
+		fmt.Println("-----------------")
 	})
 
 	c.OnRequest(func(r *colly.Request) {
